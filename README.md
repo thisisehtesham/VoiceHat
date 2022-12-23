@@ -2,13 +2,11 @@
 [![Language](https://img.shields.io/badge/Language-Javascript-blue.svg?style=flat)](https://www.javascript.com/)
 [![Framework](https://img.shields.io/badge/Framework-Reactjs-brightgreen.svg?style=flat)](https://reactjs.org/)
 # About
-<p>
   Developed a social networking web app using React.js, Redux for the front end and Firebase for the backend. 
 It uses firebase email and password authentication to give the user registration and
 sign in capabilities and also retrieves the posts from firestore database.
 Currently it consists only limited features and
 functionalities when compared to the original LinkedIn website.
-</p>
 # Tech Stack
 - React Js
 - HTML

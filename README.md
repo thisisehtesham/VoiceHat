@@ -31,7 +31,7 @@ functionalities when compared to the original LinkedIn website.
 - Download [Node Js and npm(Node package manager)](https://nodejs.org/en/) (npm gets installed by default on downloading Node)
 - Clone the repository by running the command:
 ```
-git clone https://github.com/thisisehtesham/Keeper-App.git
+git clone https://github.com/thisisehtesham/VoiceHat
 ```
 in your GitBash or terminal of VS Code.
 - Run the command `cd Keeper-App`

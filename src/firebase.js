@@ -4,12 +4,12 @@ import 'firebase/compat/auth';
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBuaAnlIjgFR3DnbaMPPSdwIKPjbfj3nHw",
-    authDomain: "linkedin-clone-4f013.firebaseapp.com",
-    projectId: "linkedin-clone-4f013",
-    storageBucket: "linkedin-clone-4f013.appspot.com",
-    messagingSenderId: "310635228161",
-    appId: "1:310635228161:web:791bbb197e9a2b5f9e6400"
+    apiKey: "AIzaSyCL6CpZDJfjZHef5r8swS9HtjiuoHfxMNs",
+    authDomain: "linkedin-clone-thisisehtesham.firebaseapp.com",
+    projectId: "linkedin-clone-thisisehtesham",
+    storageBucket: "linkedin-clone-thisisehtesham.appspot.com",
+    messagingSenderId: "430950763425",
+    appId: "1:430950763425:web:7aad1e64ac30ee9fd8d9e0"
 };
 
 //This special line on code here connects everything

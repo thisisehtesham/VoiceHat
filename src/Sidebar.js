@@ -1,52 +1,48 @@
-import { Avatar } from '@material-ui/core';
 import React from 'react'
-import { useSelector } from 'react-redux';
-import { selectUser } from './features/userSlice';
-import "./Sidebar.css";
+import "./css/sidebar.css"
+import { Avatar } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { selectUser } from './features/userSlice'
+import GroupsIcon from '@mui/icons-material/Groups';
 
 function Sidebar() {
+
     const user = useSelector(selectUser);
-    
-    const recentItem = (topic) => (
-        <div className="sidebar__recentItem">
-            <span className="sidebar__hash">#</span>
-            <p>{topic}</p>
-        </div>
-    )
 
   return (
     <div className='sidebar'>
-        <div className="sidebar__top">
-            <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFpbmJvdyUyMGdyYWRpZW50fGVufDB8fDB8fA%3D%3D&w=1000&q=80" 
-            alt="" />
-            <Avatar src={user.photoUrl} className="sidebar__avatar">
-                {user.email[0]}
-            </Avatar>
-            <h2>{user.displayName}</h2>
-            <h4>{user.email}</h4>
-        </div>
-        
-        <div className="sidebar__stats">   
-            <div className="sidebar__stat">
-                <p>Who viewed you</p>
-                <p className="sidebar__statNumber">2,543</p>
+        <div className='sidebar__profile'>
+            <img src='https://media.licdn.com/dms/image/C5616AQHRT5Ed66Q0hQ/profile-displaybackgroundimage-shrink_200_800/0/1643578030094?e=2147483647&v=beta&t=0KWSKBOT5ZpmGPy-PEXfkVtRwoZ7CUXbP9aUXaxxl6Q' alt='backgroundimage' />
+            <div className='profile__details'>
+                <Avatar src={user.photoURL} id='sidebar__avatar'/>
+                <h4>{user.displayName}</h4>
+                <p>{user.email}</p>
             </div>
-            <div className="sidebar__stat">
-                <p>Views on post</p>
-                <p className="sidebar__statNumber">2,448</p>
+            
+            <div className='profile__stats'>
+                <span>Profile viewers</span>
+                <span className='stat__numbers'>36</span>
             </div>
-        </div>
 
-        <div className="sidebar__button">
-            <p>Recent</p>
-            {recentItem('react.js')}
-            {recentItem('Programming')}
-            {recentItem('softwareengineering')}
-            {recentItem('design')}
-            {recentItem('developer')}
-        </div>
+            <div className='profile__stats'>
+                <span>Post impressions</span>
+                <span className='stat__numbers'>114</span>
+            </div>
+            </div>
+            
+            <div className='sidebar__recent'>
+                <p>Recent</p>
+                <p className='hash'><span><GroupsIcon/></span> Java Developers Community</p>
+                <p className='hash'><span><GroupsIcon/></span> React Js & React Native</p>
+                <p className='hash'><span><GroupsIcon/></span> Front End Developer Group</p>
+                <p className='hash'><span><GroupsIcon/></span> Elevate your Node.js expertise</p>
+                <p className='hash'><span><GroupsIcon/></span> Software Engineering Group</p>
+                <p className='hash'><span><GroupsIcon/></span> Artificial Intelligence, Machine Learning</p>
+            </div>
+        
+
     </div>
-  );
+  )
 }
 
 export default Sidebar

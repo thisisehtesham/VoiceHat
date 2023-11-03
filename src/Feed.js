@@ -1,93 +1,100 @@
-import React, { useEffect, useState } from "react"
-import "./Feed.css";
-import CreateIcon from "@material-ui/icons/Create";
-import InputOption from './InputOption';
-import ImageICon from "@material-ui/icons/Image";
-import SubscriptionsIcon from "@material-ui/icons/Subscriptions";
-import EventNoteIcon from "@material-ui/icons/EventNote";
-import CalendarViewDayIcon from "@material-ui/icons/CalendarViewDay";
-import Post from "./Post";
-import { db } from "./firebase";
+import React, { useEffect, useState } from 'react'
+import { Avatar } from '@mui/material';
+import PhotoIcon from '@mui/icons-material/Photo';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import "./css/feed.css"  
+import Post from './Post';
 import firebase from "firebase/compat/app";
-import { useSelector } from "react-redux";
-import { selectUser } from "./features/userSlice";
-import FlipMove from "react-flip-move";
+import { db } from "./firebase";
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/userSlice';
+import FlipMove from 'react-flip-move';
 
 function Feed() {
+
   const user = useSelector(selectUser);
 
+  const [posts, setPosts] =useState([]);
   const [input, setInput] = useState("");
-  const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    db.collection("posts")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) =>
-        setPosts(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        )
-      );
-  }, []);
-
-  const sendPost = (e) => {
-    e.preventDefault();
+  const submitPost = (event) => {
+    event.preventDefault();
 
     db.collection("posts").add({
       name: user.displayName,
       description: user.email,
       message: input,
-      photoUrl: user.photoUrl || "",
+      photoURL: user.photoURL,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-
     setInput("");
-  };
+}
+
+useEffect(() => {
+  db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+    setPosts(snapshot.docs.map((doc)=>({
+      id: doc.id,
+      data: doc.data()
+    })))
+  })
+}, [])
 
   return (
-    <div className="feed">
-      <div className="feed__inputContainer">
-        <div className="feed__input">
-          <CreateIcon />
-          <form>
+    <div className='feed'>
+      <div className='feed__input'>
+        <div className='feed__form'>
+          <Avatar src={user.photoURL} id='feed__avatar'/>
+          <form onSubmit={submitPost}>
             <input
-              placeholder='Start a post'
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              type="text"
-            />
-            <button onClick={sendPost} type='submit'>Send</button>
+            type='text'
+            placeholder='Start a post'
+            value={input}
+            onChange={ event => setInput(event.target.value) }/>
+
+            <input type='submit'/>
           </form>
         </div>
-        <div className="feed__inputOptons">
-          <InputOption Icon={ImageICon} title="Photo"
-            color="#70B5F9" />
-          <InputOption Icon={SubscriptionsIcon} title="Video"
-            color="#7FC15E" />
-          <InputOption Icon={EventNoteIcon} title="Event"
-            color="#E7A33E" />
-          <InputOption Icon={CalendarViewDayIcon} title="Write article"
-            color="#C0CBCD" />
+
+        <div className='feed__options'>
+          <div className='options'>
+            <PhotoIcon style={{color:'#70B5F9'}}/>
+            <span>Photo</span>
+          </div>
+
+          <div className='options'>
+            <YouTubeIcon style={{color:'#7FC15E'}}/>
+            <span>Video</span>
+          </div>
+
+          <div className='options'>
+            <BusinessCenterIcon style={{color:'#A872E8'}}/>
+            <span>Job</span>
+          </div>
+
+          <div className='options'>
+            <AssignmentIcon style={{color:'#E16745'}}/>
+            <span>Write article</span>
+          </div>
         </div>
       </div>
 
-      {/* Posts */}
       <FlipMove>
-      {posts.map(({ id, data: { name, description, message,
-        photoUrl } }) => (
-        <Post
+      {
+        posts.map(({id, data: {name, description, message, postURl}}) => {
+          return <Post
           key={id}
           name={name}
           description={description}
           message={message}
-          photoUrl={photoUrl}
-        />
-      ))}
-      </FlipMove>     
+          photoURL={postURl}
+          />
+        })
+      }
+      </FlipMove>      
     </div>
-  );
+  )
 }
 
-export default Feed;
+export default Feed

@@ -1,0 +1,45 @@
+.loginScreen {
+    display: grid;
+    place-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 120px;
+    padding-bottom: 100px;
+    text-align: center;
+}
+
+.loginScreen img {
+    width: 280px;
+    margin-bottom: ;
+}
+
+.loginScreen input {
+    display: block;
+    height: 40px;
+    width: 350px;
+    margin-bottom: 10px;
+    padding: 0px 10px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.loginScreen input[type="submit"] {
+    border-radius: 5px;
+    border: none;
+    background-color: #0b66c2;
+    /* bottom: 0px; */
+    color: #fff;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+}
+
+.loginScreen input[type="submit"]:hover {
+    background-color: #004182;
+}
+
+.loginScreen h4 span {
+    color: #0b66c2;
+    cursor: pointer;
+}
+

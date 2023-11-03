@@ -1,104 +1,113 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "./features/userSlice";
+import "./css/login.css"
 import { auth } from "./firebase";
-import "./Login.css";
+import { login } from "./features/userSlice";
+import { useDispatch } from "react-redux";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [profilePic, setProfilePic] = useState("");
-  const dispatch = useDispatch();
+    const [signup, setSignUp] = useState(false);
+    const [name, setName] = useState("");
+    const [photoURL, setPhotoURL] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
 
-  const loginToApp = (e) => {
-    e.preventDefault();
+    const register = (event) => {
+        event.preventDefault();
 
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .them((userAuth) => {
-        dispatch(
-          login({
-            email: userAuth.user.email,
-            uid: userAuth.user.uid,
-            displayName: userAuth.user.displayName,
-            profileUrl: userAuth.user.photoURL,
-          })
-        );
-      }).catch(error => alert(error));
+        if(!name) {
+            return alert("Name is required")
+        }
+        if(!photoURL) {
+            return alert("PhotoURL is required")
+        }
+        if(!email) {
+            return alert("Email is required")
+        }
+        if(!password) {
+            return alert("Password is required")
+        }
 
-  };
+        auth.createUserWithEmailAndPassword(email, password)
+        .then((userAuth) => {
+            userAuth.user.updateProfile({
+                displayName: name,
+                photoURL: photoURL
+            }).then(() => {
+                dispatch(login({
+                    email: userAuth.user.email,
+                    uid: userAuth.user.uid,
+                    photoURL: photoURL,
+                    displayName: name
+                }))
+            })
+        }).catch((error) => {
+            return alert(error);
+        });
 
-  const register = () => {
-    if (!name) {
-      return alert("Please enter a full name!")
+        setName("");
+        setPhotoURL("");
+        setEmail("");
+        setPassword("");
     }
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userAuth) => {
-        userAuth.user
-          .updateProfile({
-            displayName: name,
-            photoURL: profilePic,
-          })
-          .then(() => {
-            dispatch(
-              Login({
-                email: userAuth.user.email,
-                uid: userAuth.user.uid,
-                displayName: name,
-                photoUrl: profilePic
-              }));
-          });
-      })
-      .catch((error) => alert(error));
-  };
+    const signIn = (event) => {
+        event.preventDefault();
 
-  return (
-    <div className="login">
-      <img
-        src={require('./Images/Cover.png')}
-        alt=""
-      />
+        if(!email) {
+            return alert("Email is required")
+        }
+        if(!password) {
+            return alert("Password is required")
+        }
 
-      <form>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Full Name (required if registering)"
-          type="text"
-        />
+        auth.signInWithEmailAndPassword(email, password)
+        .then(({user}) => {
+            dispatch(login({
+                email: user.email,
+                uid: user.uid,
+                photoURL: user.photoURL,
+                displayName: user.displayName
+            }))
+        }).catch((error) => {
+            return alert(error);
+        })
+    }
 
-        <input
-          value={profilePic}
-          onChange={(e) => setProfilePic(e.target.value)}
-          placeholder="Profile Picture URL (optional)"
-          type="text"
-        />
+    return (
+        <div className="loginScreen">
+            <img
+                src={require('./Images/Cover.png')}
+                alt=""
+            ></img>
 
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          type="email"
-        />
+            {signup === true ? (
+                <form onSubmit={register}>
+                    <input type="text" placeholder="Full Name" value={name} onChange={(event) => setName(event.target.value)}/>
+                    <input type="text" placeholder="Profile Picture URL" value={photoURL} onChange={(event) => setPhotoURL(event.target.value)}/>
+                    <input type="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)}/>
+                    <input type="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)}/>
 
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          type="password"
-        />
+                    <input type="submit" value="Sign up" />
 
-        <button type='submit' onClick={loginToApp}>Sign in</button>
-      </form>
+                    <h4>
+                        Already on LinkedIn? <span onClick={(event) => setSignUp(false)}>Sign in</span>
+                    </h4>
+                </form>
+            ) : (
+                <form onSubmit={signIn}>
+                    <input type="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)}/>
+                    <input type="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)}/>
 
-      <p>Not a member?
-        <span className="login__register" onClick={register}> Register Now</span>
-      </p>
-    </div>
-  )
+                    <input type="submit" value="Sign in" />
+
+                    <h4>
+                        New to LinkedIn? <span onClick={(event) => setSignUp(true)}>Register now</span>
+                    </h4>
+                </form>
+            )}
+        </div>
+    );
 }
 
-export default Login
+export default Login;

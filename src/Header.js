@@ -1,51 +1,40 @@
-import React from 'react'
-import "./Header.css";
-import SearchIcon from '@material-ui/icons/Search';
-import HeaderOption from './HeaderOption';
-import HomeIcon from '@material-ui/icons/Home';
-import PeopleIcon from '@material-ui/icons/People';
-import WorkIcon from '@material-ui/icons/Store';
-import MessageIcon from '@material-ui/icons/Message';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { useDispatch } from 'react-redux';
-import { auth } from './firebase';
-import { logout } from './features/userSlice';
+import React from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import "./css/header.css";
+import Headeroptions from "./Headeroptions.js";
+import HomeIcon from "@mui/icons-material/Home";
+import PeopleIcon from "@mui/icons-material/People";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import MessageIcon from "@mui/icons-material/Message";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Avatar } from "@mui/material";
+import { useSelector } from "react-redux";
+import { selectUser } from "./features/userSlice";
 
 function Header() {
-  const dispatch = useDispatch();
-  const logoutOfApp = () => {
-    dispatch(logout())
-    auth.signOut();
-  }
+    const user = useSelector(selectUser);
 
-  return (
-    <div className='header'>
-      <div className="header__left">
-        <img src={require('./Images/Logo.png')}
-          alt="" />
-
-        <div className="header__search">
-          <SearchIcon />
-          <input placeholder='Search VoiceHat' type="text" />
+    return (
+        <div className="header">
+            <div className="header__left">
+                <div className="header__logo">
+                    <img src={require("./Images/Logo.png")} alt="logo" />
+                </div>
+                <div className="header__search">
+                    <SearchIcon />
+                    <input type="text" placeholder="Search" />
+                </div>
+            </div>
+            <div className="header__right">
+                <Headeroptions Icon={HomeIcon} title="Home" />
+                <Headeroptions Icon={PeopleIcon} title="My Netwok" />
+                <Headeroptions Icon={BusinessCenterIcon} title="Jobs" />
+                <Headeroptions Icon={MessageIcon} title="Messaging" />
+                <Headeroptions Icon={NotificationsIcon} title="Notifications" />
+                <Headeroptions avatar={Avatar} title={user.displayName} />
+            </div>
         </div>
-      </div>
-
-      <div className="header__right">
-        <HeaderOption Icon={HomeIcon} title="Home" />
-        <HeaderOption Icon={PeopleIcon} title="My Connections" />
-        <HeaderOption Icon={WorkIcon} title="Marketplace" />
-        <HeaderOption Icon={MessageIcon} title="Messaging" />
-        <HeaderOption Icon={NotificationsIcon} title="Notifications" />
-        <HeaderOption 
-          avatar={true}
-          title="Me"
-          onClick={logoutOfApp}
-        />
-
-
-      </div>
-    </div>
-  )
+    );
 }
 
-export default Header
+export default Header;

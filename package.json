@@ -3,25 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
-    "@reduxjs/toolkit": "^1.9.1",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/material": "^5.14.5",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
-    "firebase": "^9.15.0",
+    "firebase": "^10.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-flip-move": "^3.0.5",
-    "react-redux": "^8.0.5",
+    "react-redux": "^8.1.2",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
-  },
-  "devDependencies": {
-    "@svgr/webpack": "^6.5.1"
-  },
-  "overrides": {
-    "@svgr/webpack": "$@svgr/webpack"
   },
   "scripts": {
     "start": "react-scripts start",
